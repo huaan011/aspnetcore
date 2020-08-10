@@ -494,7 +494,7 @@ namespace System.Net.Http.HPack
         private void ProcessHeaderValue(ReadOnlySpan<byte> data, IHttpHeadersHandler handler)
         {
             ReadOnlySpan<byte> headerValueSpan = _headerValueRange == null
-                ? new Span<byte>(_headerValueOctets, 0, _headerValueLength)
+                ? _headerValueOctets.AsSpan(0, _headerValueLength)
                 : data.Slice(_headerValueRange.GetValueOrDefault().start, _headerValueRange.GetValueOrDefault().length);
 
             if (_headerStaticIndex > 0)
@@ -509,7 +509,7 @@ namespace System.Net.Http.HPack
             else
             {
                 ReadOnlySpan<byte> headerNameSpan = _headerNameRange == null
-                    ? new Span<byte>(_headerName, 0, _headerNameLength)
+                    ? _headerName.AsSpan(0, _headerNameLength)
                     : data.Slice(_headerNameRange.GetValueOrDefault().start, _headerNameRange.GetValueOrDefault().length);
 
                 handler.OnHeader(headerNameSpan, headerValueSpan);

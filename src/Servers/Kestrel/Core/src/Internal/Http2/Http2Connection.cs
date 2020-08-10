@@ -1311,7 +1311,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2
             // A request or response containing uppercase header field names MUST be treated as malformed (Section 8.1.2.6).
             for (var i = 0; i < name.Length; i++)
             {
-                if (name[i] >= 65 && name[i] <= 90)
+                if (((uint)name[i] - 65) <= (90 - 65))
                 {
                     if (_requestHeaderParsingState == RequestHeaderParsingState.Trailers)
                     {
