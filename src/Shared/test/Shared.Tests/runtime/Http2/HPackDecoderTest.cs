@@ -718,14 +718,13 @@ namespace System.Net.Http.Unit.Tests.HPack
 
         void IHttpHeadersHandler.OnStaticIndexedHeader(int index)
         {
-            // Not yet implemented for HPACK.
-            throw new NotImplementedException();
+            ref readonly var entry = ref H2StaticTable.Get(index - 1);
+            ((IHttpHeadersHandler)this).OnHeader(entry.Name, entry.Value);
         }
 
         void IHttpHeadersHandler.OnStaticIndexedHeader(int index, ReadOnlySpan<byte> value)
         {
-            // Not yet implemented for HPACK.
-            throw new NotImplementedException();
+            ((IHttpHeadersHandler)this).OnHeader(H2StaticTable.Get(index - 1).Name, value);
         }
 
         void IHttpHeadersHandler.OnHeadersComplete(bool endStream) { }
