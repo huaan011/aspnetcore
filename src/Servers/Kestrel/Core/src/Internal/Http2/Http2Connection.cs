@@ -1282,7 +1282,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2
                 {
                     // Throws BadRequest for header count limit breaches.
                     // Throws InvalidOperation for bad encoding.
-                    _currentHeadersStream.OnHeader(name, value);
+                    _currentHeadersStream.OnHeader(index, name, value);
                 }
             }
             catch (Microsoft.AspNetCore.Http.BadHttpRequestException bre)
